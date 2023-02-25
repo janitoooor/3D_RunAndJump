@@ -4,33 +4,27 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] obstaclePrefab;
-    private int indexPrefab;
-    private float startDelay = 2;
-    private float spawnInterval = 2;
+    [SerializeField] private GameObject[] _obstaclePrefab;
+    private int _indexPrefab;
+    private float _startDelay = 2;
+    private float _spawnInterval = 2;
 
-    private PlayerController playerControllerScript;
+    private PlayerController _playerControllerScript;
 
-    private Vector3 spawnPos = new Vector3(30, 1, 0);
+    private Vector3 _spawnPos = new Vector3(30, 1, 0);
     // Start is called before the first frame update
     void Start()
     {
         // // find the player object that has its PlayerController component
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        InvokeRepeating("SpawnObstacle", startDelay, spawnInterval);
+        _playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        InvokeRepeating("SpawnObstacle", _startDelay, _spawnInterval);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     void SpawnObstacle()
     {
-        indexPrefab = Random.Range(0, obstaclePrefab.Length);
+        _indexPrefab = Random.Range(0, _obstaclePrefab.Length);
 
-        if (playerControllerScript.gameOver == false)
-            Instantiate(obstaclePrefab[indexPrefab], spawnPos, obstaclePrefab[indexPrefab].transform.rotation);
+        if (_playerControllerScript.gameOver == false)
+            Instantiate(_obstaclePrefab[indexPrefab], spawnPos, o_bstaclePrefab[_indexPrefab].transform.rotation);
     }
 }
