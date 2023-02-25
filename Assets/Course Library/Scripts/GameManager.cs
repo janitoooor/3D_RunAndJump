@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Transform startPoint;
-    public float walkSpeed;
-    public float score;
-    private PlayerController playerControllerScript;
+    [SerializeField] private Transform _startPoint;
+    [SerializeField] private float _walkSpeed;
+    public Score {get; private set;}
+    private PlayerController _playerControllerScript;
     // Start is called before the first frame update
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        score = 0;
-        playerControllerScript.gameOver = true;
+        _playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        Score = 0;
+        p_layerControllerScript.gameOver = true;
         StartCoroutine(PlayIntro());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!playerControllerScript.gameOver)
+        if(!_playerControllerScript.gameOver)
         {
-            if(playerControllerScript.rushUp)
+            if(_playerControllerScript.rushUp)
             {
-                score += 2;
+                Score += 2;
             }
             else
             {
-                score++;
+                Score++;
             }
-            Debug.Log("Score:" + score);
+            Debug.Log("Score:" + Score);
         }
     }
 
@@ -45,18 +45,18 @@ public class GameManager : MonoBehaviour
         float distanceCovered = (Time.time - startTime) * walkSpeed;
         float fractionJourney = distanceCovered / journeyLength;
 
-        playerControllerScript.GetComponent<Animator>().SetFloat("Speed_Multiplier", 0.5f);
+        _playerControllerScript.GetComponent<Animator>().SetFloat("Speed_Multiplier", 0.5f);
 
         while (fractionJourney < 1)
         {
             distanceCovered = (Time.time - startTime) * walkSpeed;
             fractionJourney = distanceCovered / journeyLength;
-            playerControllerScript.transform.position = Vector3.Lerp(startPos, endPos, fractionJourney);
+            _playerControllerScript.transform.position = Vector3.Lerp(startPos, endPos, fractionJourney);
             yield return null;
         }
 
-        playerControllerScript.GetComponent<Animator>().SetFloat("Speed_Multiplier", 1.0f);
-        playerControllerScript.gameOver = false;
+        _playerControllerScript.GetComponent<Animator>().SetFloat("Speed_Multiplier", 1.0f);
+        _playerControllerScript.gameOver = false;
 
     }
 }
